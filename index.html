@@ -5,30 +5,158 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>koopacetic</title>
   <meta name="description" content="Directory of koopacetic projects.">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='42' fill='%23b45309'/></svg>">
   <style>
-    :root { color-scheme: light dark; }
-    body {
-      font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
-      max-width: 40rem;
-      margin: 4rem auto;
-      padding: 0 1.25rem;
-      line-height: 1.5;
+    :root {
+      --bg: #fafaf7;
+      --panel: #ffffff;
+      --ink: #1f2328;
+      --muted: #6b7280;
+      --line: #e5e7eb;
+      --accent: #b45309;
+      --shadow: 0 1px 2px rgb(0 0 0 / 0.04), 0 8px 24px -12px rgb(0 0 0 / 0.12);
     }
-    h1 { font-size: 1.5rem; margin-bottom: 2rem; }
-    ul { list-style: none; padding: 0; }
-    li { margin-bottom: 1.25rem; }
-    a { font-weight: 600; font-size: 1.1rem; }
-    p { margin: 0.25rem 0 0; opacity: 0.75; }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #111214;
+        --panel: #1a1c1f;
+        --ink: #e8e6e3;
+        --muted: #9ca3af;
+        --line: #2a2d31;
+        --accent: #f59e0b;
+        --shadow: 0 1px 2px rgb(0 0 0 / 0.3), 0 8px 24px -12px rgb(0 0 0 / 0.6);
+      }
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      font: 16px/1.55 system-ui, -apple-system, "Segoe UI", sans-serif;
+      background:
+        radial-gradient(60rem 30rem at 85% -10%, color-mix(in srgb, var(--accent) 10%, transparent), transparent 70%),
+        var(--bg);
+      color: var(--ink);
+    }
+    main {
+      flex: 1;
+      width: 100%;
+      max-width: 52rem;
+      margin: 0 auto;
+      padding: 5rem 1.5rem 3rem;
+    }
+    header { margin-bottom: 3rem; }
+    .kicker {
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--accent);
+    }
+    h1 {
+      margin: 0.25rem 0 0.5rem;
+      font-size: clamp(2.25rem, 6vw, 3.25rem);
+      line-height: 1.1;
+      letter-spacing: -0.03em;
+    }
+    header p { margin: 0; color: var(--muted); max-width: 32rem; }
+
+    .projects {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(18rem, 1fr));
+      gap: 1.25rem;
+    }
+    .card {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+      padding: 1.5rem 1.5rem 1.25rem;
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      box-shadow: var(--shadow);
+      color: inherit;
+      text-decoration: none;
+      transition: transform 0.18s ease, border-color 0.18s ease, box-shadow 0.18s ease;
+    }
+    .card::before {
+      content: "";
+      position: absolute;
+      inset: 0 0 auto 0;
+      height: 3px;
+      border-radius: 14px 14px 0 0;
+      background: var(--accent);
+      opacity: 0;
+      transition: opacity 0.18s ease;
+    }
+    .card:hover, .card:focus-visible {
+      transform: translateY(-3px);
+      border-color: color-mix(in srgb, var(--accent) 40%, var(--line));
+      outline: none;
+    }
+    .card:hover::before, .card:focus-visible::before { opacity: 1; }
+    .card h2 {
+      margin: 0 0 0.4rem;
+      font-size: 1.2rem;
+      letter-spacing: -0.01em;
+    }
+    .card p { margin: 0 0 1.25rem; color: var(--muted); font-size: 0.95rem; }
+    .card .go {
+      margin-top: auto;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--accent);
+    }
+    .card .go span { display: inline-block; transition: transform 0.18s ease; }
+    .card:hover .go span { transform: translateX(4px); }
+
+    footer {
+      padding: 2rem 1.5rem;
+      text-align: center;
+      font-size: 0.85rem;
+      color: var(--muted);
+    }
+    footer a { color: inherit; }
+
+    @media (prefers-reduced-motion: reduce) {
+      .card, .card *, .card::before { transition: none; }
+    }
   </style>
 </head>
 <body>
-  <h1>koopacetic</h1>
-  <ul>
-    <!-- To add a project: copy an <li> and point href at https://koopacetic.github.io/<repo-name>/ -->
-    <li>
-      <a href="https://koopacetic.github.io/explode_explain/">Explainers</a>
-      <p>Long-form pages that build up one concept at a time, with drawings that change as you scroll.</p>
-    </li>
-  </ul>
+  <main>
+    <header>
+      <div class="kicker">Projects</div>
+      <h1>koopacetic</h1>
+      <p>Interactive pages and experiments, each in its own repository.</p>
+    </header>
+
+    <ul class="projects">
+      <!-- To add a project: copy an <li> and point href at https://koopacetic.github.io/<repo-name>/ -->
+      <li>
+        <a class="card" href="https://koopacetic.github.io/explode_explain/">
+          <h2>Explainers</h2>
+          <p>Long-form pages that build up one concept at a time, with drawings that change as you scroll.</p>
+          <div class="go">Open <span>&rarr;</span></div>
+        </a>
+      </li>
+      <li>
+        <a class="card" href="https://koopacetic.github.io/lineage/">
+          <h2>Book Lineage</h2>
+          <p>Interactive network and timeline of how books, people and ideas influence one another.</p>
+          <div class="go">Open <span>&rarr;</span></div>
+        </a>
+      </li>
+    </ul>
+  </main>
+
+  <footer>
+    <a href="https://github.com/koopacetic">github.com/koopacetic</a>
+  </footer>
 </body>
 </html>
